@@ -1,4 +1,8 @@
 package com.auca.aucareg.repository;
 
-public interface CourseRepository {
+import com.auca.aucareg.model.Course;
+import com.auca.aucareg.model.CourseDef;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface CourseRepository extends JpaRepository<Course, Integer> {
 }

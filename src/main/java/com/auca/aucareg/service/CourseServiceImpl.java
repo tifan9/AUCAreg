@@ -1,30 +1,25 @@
-package service.implementation;
+package com.auca.aucareg.service;
 
 import com.auca.aucareg.model.Course;
 import com.auca.aucareg.repository.CourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import service.CourseService;
 
 import java.rmi.RemoteException;
 import java.util.List;
+
 @Service
-public class CourseServiceImpl implements CourseService {
+public class CourseServiceImpl implements CourseService{
     @Autowired
     private CourseRepository courseRepository;
     @Override
-    public Course saveCourse(Course course) throws Exception {
+    public Course insertCourse(Course course) throws RemoteException {
         return courseRepository.save(course);
     }
 
     @Override
-    public Course updateCourse(Course course) throws Exception {
-        return null;
-    }
-
-    @Override
-    public Course selectCourse(Course courseId) throws Exception {
-        Course course=courseRepository.findById(id).orElse(null);
+    public Course selectCourse(int courseId) throws RemoteException {
+        Course course=courseRepository.findById(courseId).orElse(null);
         if(course!=null){
             return  course;
         }
@@ -32,7 +27,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public List<Course> getAllCourse(String id) throws Exception {
+    public List<Course> selectAllCourses() throws RemoteException {
         return courseRepository.findAll();
     }
 
@@ -53,11 +48,11 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public List<Course> getCourseByDepAndSemester(int acaid, int semid) {
-        return null;
+        return courseRepository.findCoursesBySemesterAndAcademicUnit(acaid, semid);
     }
 
     @Override
     public List<Course> getCoursePerStudent(int studentId) {
-        return null;
+        return courseRepository.findCoursesByStudent(studentId);
     }
 }

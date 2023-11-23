@@ -1,10 +1,9 @@
-package service.implementation;
+package com.auca.aucareg.service;
 
 import com.auca.aucareg.model.AcademicUnit;
 import com.auca.aucareg.repository.AcademicRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import service.AcademicService;
 
 import java.rmi.RemoteException;
 import java.util.List;
@@ -13,21 +12,11 @@ public class AcademicServiceImpl implements AcademicService {
     @Autowired
     private AcademicRepository academicRepository;
     @Override
-    public AcademicUnit saveAcademicUnit(AcademicUnit academicUnit) throws RemoteException {
-        return academicRepository.save(academicUnit);
+    public AcademicUnit insertAcademicUnit(AcademicUnit academic) throws RemoteException {
+        return academicRepository.save(academic);
+
     }
 
-    @Override
-    public AcademicUnit updateAcademicUnit(int id, String name) throws RemoteException {
-        AcademicUnit academic = academicRepository.findById(id).orElse(null);
-        if(academic != null){
-            academic.setName(name);
-            return academicRepository.save(academic);
-        }
-        else{
-            return null;
-        }
-    }
     @Override
     public AcademicUnit selectAcademicUnit(int academicUnitId) throws RemoteException {
         AcademicUnit academics=academicRepository.findById(academicUnitId).orElse(null);
@@ -40,7 +29,7 @@ public class AcademicServiceImpl implements AcademicService {
     }
 
     @Override
-    public List<AcademicUnit> getAllAcademicUnits() throws RemoteException {
+    public List<AcademicUnit> selectAllAcademicUnit() throws RemoteException {
         return academicRepository.findAll();
     }
 
@@ -52,5 +41,19 @@ public class AcademicServiceImpl implements AcademicService {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public AcademicUnit updateAcademicUnit(int id, String name) throws RemoteException {
+        AcademicUnit acad=academicRepository.findById(id).orElse(null);
+        if(acad !=null){
+            acad.setName(name);
+            return academicRepository.save(acad);
+
+        }
+        else{
+            return null;
+        }
+
     }
 }

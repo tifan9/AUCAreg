@@ -1,15 +1,19 @@
 package com.auca.aucareg.repository;
 
 import com.auca.aucareg.model.Course;
-import com.auca.aucareg.model.CourseDef;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface CourseRepository extends JpaRepository<Course, Integer> {
-    List<Course> findBySemsSemidAndAcademicId(int semesterId, int academicUnitId);
+public interface CourseRepository extends JpaRepository<Course,Integer> {
+    @Query("SELECT c FROM Course c WHERE c.sems.semid = :semesterId AND c.academic.id = :academicUnitId")
+    List<Course> findCoursesBySemesterAndAcademicUnit(@Param("semesterId") int semesterId, @Param("academicUnitId") int academicUnitId);
 
-    List<Course> findByStudentsStudentId(int studentId);
+    @Query("SELECT c FROM Course c JOIN c.students s WHERE s.student.id = :studentId")
+    List<Course> findCoursesByStudent(@Param("studentId") int studentId);
 
-    List<Course> findBySemsSemid(int semesterId);
+    @Query("SELECT c FROM Course c WHERE c.sems.semid = :semesterId")
+    List<Course> findCoursesBySemester(@Param("semesterId") int semesterId);
 }

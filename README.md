@@ -1,3 +1,6 @@
+NAME: UWASE SOPHIE
+ID: 24435
+
 # AUCAreg
 Screenshots:
  Course Per semester & course
